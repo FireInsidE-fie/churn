@@ -13,7 +13,7 @@ class HTMLNode():
             return self.props
         final_string = ""
         for prop in self.props:
-            final_string = final_string + f" {prop}={self.props[prop]} "
+            final_string = final_string + f" {prop}={self.props[prop]}"
         return final_string
 
     def __repr__(self):
