@@ -4,7 +4,7 @@ from leafnode import LeafNode
 
 
 class TestLeafNode(unittest.TestCase):
-    def test_repr_props(self):
+    def test_leafnode(self):
         node = LeafNode("h1", "miku")
         node2 = LeafNode("html", "empty", {"lang": "en"})
         node3 = LeafNode("p", "This is cool")
