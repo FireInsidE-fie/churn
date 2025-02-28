@@ -9,4 +9,6 @@ class LeafNode(HTMLNode):
             raise ValueError("All leaf nodes must have a value.")
         if self.props:
             return f"<{self.tag} {self.props_to_html().strip(' ')}>{self.value}</{self.tag}>"
-        return f"<{self.tag}>{self.value}</{self.tag}>"
+        if self.tag:
+            return f"<{self.tag}>{self.value}</{self.tag}>"
+        return f"{self.value}"
