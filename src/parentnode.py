@@ -12,4 +12,6 @@ class ParentNode(HTMLNode):
         if not self.children:
             raise ValueError("ParentNode must have children")
         children_html = "".join(list(map(lambda elem: elem.to_html(), self.children)))
+        if self.props:
+            return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>"
         return f"<{self.tag}>{children_html}</{self.tag}>"
