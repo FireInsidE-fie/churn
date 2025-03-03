@@ -56,3 +56,10 @@ class TestParentNode(unittest.TestCase):
             parent_node.to_html(),
             "<div><span id=id1><a href=aisling.codes>grandchild</a></span></div>",
         )
+
+    def test_to_html_with_grandchildren3(self):
+        grandchild_node = LeafNode("a", "grandchild", {"href": "aisling.codes"})
+        child_node = ParentNode("span", [grandchild_node], {"id": "id1"})
+        parent_node = ParentNode("div", [])
+        with self.assertRaises(ValueError):
+            parent_node.to_html()
