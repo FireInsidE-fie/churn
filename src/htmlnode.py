@@ -1,4 +1,4 @@
-class HTMLNode():
+class HTMLNode:
     def __init__(self, tag=None, value=None, children=None, props=None):
         self.tag = tag              # which tag (<h1>)
         self.value = value          # value contained in tag

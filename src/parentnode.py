@@ -4,7 +4,7 @@ class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
         self.tag = tag
         self.children = children
-        self.props = property
+        self.props = props
 
     def to_html(self):
         if not self.tag:
