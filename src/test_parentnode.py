@@ -58,8 +58,18 @@ class TestParentNode(unittest.TestCase):
         )
 
     def test_to_html_with_grandchildren3(self):
-        grandchild_node = LeafNode("a", "grandchild", {"href": "aisling.codes"})
-        child_node = ParentNode("span", [grandchild_node], {"id": "id1"})
         parent_node = ParentNode("div", [])
         with self.assertRaises(ValueError):
             parent_node.to_html()
+
+    def test_to_html_with_grandchildren4(self):
+        grandchild_node = LeafNode("a", "grandchild", {"href": "aisling.codes"})
+        grandchild_node2 = LeafNode("strong", "grandchild2", {"class": "wow1"})
+        grandchild_node3 = LeafNode("b", "grandchild3", {"class": "wow2"})
+        child_node = ParentNode("span", [grandchild_node], {"id": "id1"})
+        child_node2 = ParentNode("span", [grandchild_node2, grandchild_node3], {"id": "id2"})
+        parent_node = ParentNode("div", [child_node, child_node2])
+        self.assertEqual(
+            parent_node.to_html(),
+            "<div><span id=id1><a href=aisling.codes>grandchild</a></span><span id=id2><strong class=wow1>grandchild2</strong><b class=wow2>grandchild3</b></span></div>",
+        )
