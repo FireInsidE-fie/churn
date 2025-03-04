@@ -11,5 +11,5 @@ class TestSplitDelimiter(unittest.TestCase):
         self.assertEqual(new_nodes, [
             TextNode("This is text with a ", TextType.NORMAL),
             TextNode("code block", TextType.CODE),
-            TextNode(" word", TextType.NORMAL),
+            TextNode(" word", TextType.NORMAL)
         ])
