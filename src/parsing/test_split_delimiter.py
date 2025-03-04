@@ -44,6 +44,32 @@ class TestSplitDelimiter(unittest.TestCase):
             TextNode(" word", TextType.NORMAL)
         ])
 
+    def test_split_delimiter5(self):
+        node = TextNode("This is nothing but /italic/", TextType.ITALIC)
+        new_nodes = split_nodes_delimiter([node], "/", TextType.ITALIC)
+
+        self.assertEqual(new_nodes, [
+            TextNode("This is nothing but /italic/", TextType.ITALIC),
+        ])
+
+    def test_split_delimiter6(self):
+        node = TextNode("This is broken text with a /italic word", TextType.NORMAL)
+
+        with self.assertRaises(Exception):
+            split_nodes_delimiter([node], "/", TextType.ITALIC)
+
+    def test_split_delimiter4(self):
+        node = TextNode("This is text with two !code! !words!", TextType.NORMAL)
+        new_nodes = split_nodes_delimiter([node], "!", TextType.CODE)
+
+        self.assertEqual(new_nodes, [
+            TextNode("This is text with two ", TextType.NORMAL),
+            TextNode("code", TextType.CODE),
+            TextNode(" ", TextType.NORMAL),
+            TextNode("words", TextType.CODE),
+            TextNode("", TextType.NORMAL)
+        ])
+
     def test_split_delimiter_empty(self):
         node = TextNode("This is text with *a `strong` word*", TextType.NORMAL)
         with self.assertRaises(AttributeError):
