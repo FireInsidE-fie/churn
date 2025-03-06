@@ -58,7 +58,7 @@ class TestSplitDelimiter(unittest.TestCase):
         with self.assertRaises(Exception):
             split_nodes_delimiter([node], "/", TextType.ITALIC)
 
-    def test_split_delimiter4(self):
+    def test_split_delimiter7(self):
         node = TextNode("This is text with two !code! !words!", TextType.NORMAL)
         new_nodes = split_nodes_delimiter([node], "!", TextType.CODE)
 
@@ -75,6 +75,6 @@ class TestSplitDelimiter(unittest.TestCase):
         with self.assertRaises(AttributeError):
             split_nodes_delimiter(node, "*", TextType.WOW)
         with self.assertRaises(ValueError):
-            new_nodes1 = split_nodes_delimiter(None, "*", TextType.BOLD)
-            new_nodes2 = split_nodes_delimiter(node, "", TextType.BOLD)
-            new_nodes3 = split_nodes_delimiter(node, "*", None)
+            split_nodes_delimiter(None, "*", TextType.BOLD)
+            split_nodes_delimiter(node, "", TextType.BOLD)
+            split_nodes_delimiter(node, "*", None)
