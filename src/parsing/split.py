@@ -1,5 +1,7 @@
 from src.textnode import TextNode, TextType
 
+from extract import extract_markdown_images, extract_markdown_links
+
 def split_nodes_delimiter(old_nodes, delimiter, text_type):
     if not old_nodes or not delimiter or not text_type:
         raise ValueError("split_nodes_delimiter needs valid values")
@@ -18,4 +20,18 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                 new_nodes.append(TextNode(s, text_type))
     return new_nodes
 
+def split_nodes_image(old_nodes):
+    nodes = []
+    for node in old_nodes:
+        images = extract_markdown_images(node.text)
+        if not images:
+            nodes.append(node)
+            continue
+        for image in images:
+            image_node = TextNode(image[0], TextType.IMAGE, image[1])
+            nodes.append(TextNode(node.text.split(image[0]), TextType.NORMAL))
+            nodes.append(image_node)
+    return nodes
 
+def split_nodes_link(old_nodes):
+    pass
