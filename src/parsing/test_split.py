@@ -80,7 +80,7 @@ class TestSplitDelimiter(unittest.TestCase):
             split_nodes_delimiter(node, "*", None)
 
 class TestSplitImages(unittest.TestCase):
-    def test_split_images(self):
+    def test_split_images1(self):
         node = TextNode(
             "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
             TextType.NORMAL,
@@ -94,6 +94,21 @@ class TestSplitImages(unittest.TestCase):
                 TextNode(
                     "second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
                 ),
+            ],
+            new_nodes,
+        )
+
+    def test_split_images2(self):
+        node = TextNode(
+            "This is text with just one ![image](https://i.imgur.com/zjjcJKZ.png) and some text afterwards...",
+            TextType.NORMAL,
+        )
+        new_nodes = split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with just one ", TextType.NORMAL),
+                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode(" and some text afterwards...", TextType.NORMAL),
             ],
             new_nodes,
         )

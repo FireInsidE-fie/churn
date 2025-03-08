@@ -24,13 +24,21 @@ def split_nodes_image(old_nodes):
     nodes = []
     for node in old_nodes:
         images = extract_markdown_images(node.text)
+        text = node.text
         if not images:
             nodes.append(node)
             continue
         for image in images:
+            image_pattern = f"![{image[0]}]({image[1]})"
+            text_node = TextNode(text.split(image_pattern)[0], TextType.NORMAL)
             image_node = TextNode(image[0], TextType.IMAGE, image[1])
-            nodes.append(TextNode(node.text.split(image[0]), TextType.NORMAL))
+            nodes.append(text_node)
             nodes.append(image_node)
+            text = text.split(image_pattern)[1]
+            # print(text_node)
+            # print(image_node)
+        if text:
+            nodes.append(TextNode(text, TextType.NORMAL))
     return nodes
 
 def split_nodes_link(old_nodes):
