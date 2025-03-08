@@ -32,7 +32,8 @@ def split_nodes_image(old_nodes):
             image_pattern = f"![{image[0]}]({image[1]})"
             text_node = TextNode(text.split(image_pattern)[0], TextType.NORMAL)
             image_node = TextNode(image[0], TextType.IMAGE, image[1])
-            nodes.append(text_node)
+            if text_node.text:
+                nodes.append(text_node)
             nodes.append(image_node)
             text = text.split(image_pattern)[1]
             # print(text_node)

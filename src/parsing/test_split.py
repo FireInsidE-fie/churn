@@ -112,3 +112,84 @@ class TestSplitImages(unittest.TestCase):
             ],
             new_nodes,
         )
+
+    def test_split_images3(self):
+        node = TextNode(
+            "![image](https://i.imgur.com/zjjcJKZ.png)",
+            TextType.NORMAL,
+        )
+        node2 = TextNode(
+            "![image2](https://i.imgur.com/zjjcJKZ2.png)",
+            TextType.NORMAL,
+        )
+        new_nodes = split_nodes_image([node, node2])
+        self.assertListEqual(
+            [
+                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode("image2", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ2.png"),
+            ],
+            new_nodes,
+        )
+
+    def test_split_images4(self):
+        node = TextNode(
+            "This is text with just no images...",
+            TextType.NORMAL,
+        )
+        new_nodes = split_nodes_image([node])
+        self.assertListEqual(
+            [
+                TextNode("This is text with just no images...", TextType.NORMAL),
+            ],
+            new_nodes,
+        )
+
+    def test_split_images5(self):
+        node = TextNode(
+            "wowowowowowow ![image](https://i.imgur.com/zjjcJKZ.png)",
+            TextType.NORMAL,
+        )
+        node2 = TextNode(
+            "![image2](https://i.imgur.com/zjjcJKZ2.png) wowowowowoowow",
+            TextType.NORMAL,
+        )
+        new_nodes = split_nodes_image([node, node2])
+        self.assertListEqual(
+            [
+                TextNode("wowowowowowow ", TextType.NORMAL),
+                TextNode("image", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode("image2", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ2.png"),
+                TextNode(" wowowowowoowow", TextType.NORMAL),
+            ],
+            new_nodes,
+        )
+
+    def test_split_images6(self):
+        node = TextNode(
+            "This is text with an ![image followed by](https://i.imgur.com/zjjcJKZ.png)![a second image](https://i.imgur.com/3elNhQu.png)",
+            TextType.NORMAL,
+        )
+        node2 = TextNode(
+            "![image followed by](https://i.imgur.com/zjjcJKZ.png)![a second image](https://i.imgur.com/3elNhQu.png)![and a third](i.love.you)",
+            TextType.NORMAL,
+        )
+        new_nodes = split_nodes_image([node, node2])
+        self.assertListEqual(
+            [
+                TextNode("This is text with an ", TextType.NORMAL),
+                TextNode("image followed by", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"),
+                TextNode(
+                    "a second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
+                ),
+                TextNode(
+                    "image followed by", TextType.IMAGE, "https://i.imgur.com/zjjcJKZ.png"
+                ),
+                TextNode(
+                    "a second image", TextType.IMAGE, "https://i.imgur.com/3elNhQu.png"
+                ),
+                TextNode(
+                    "and a third", TextType.IMAGE, "i.love.you"
+                ),
+            ],
+            new_nodes,
+        )
