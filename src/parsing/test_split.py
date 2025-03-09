@@ -344,3 +344,32 @@ class TestSplitLinks(unittest.TestCase):
             ],
             new_nodes,
         )
+
+# class TestSplitBoth(unittest.TestCase):
+#     def test_split_both1(self):
+#         start_node = TextNode(
+#             "An ![image](https://miku.org) and a [link](https://teto.com)",
+#             TextType.NORMAL
+#         )
+#         result_node = []
+#
+#         result_node.extend(split_nodes_image([start_node]))
+#         result_node.extend(split_nodes_link(result_node))
+#
+#         self.assertListEqual(
+#             [
+#                 TextNode("An ", TextType.NORMAL),
+#                 TextNode("image", TextType.IMAGE, "https://miku.org"),
+#                 TextNode(" and a ", TextType.NORMAL),
+#                 TextNode(
+#                     "link", TextType.LINK, "https://teto.com"
+#                 ),
+#             ],
+#             result_node,
+#         )
+#
+#     def test_split_both2(self):
+#         pass
+#
+#     def test_split_both3(self):
+#         pass
