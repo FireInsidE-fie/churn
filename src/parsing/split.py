@@ -23,11 +23,14 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
 def split_nodes_image(old_nodes):
     nodes = []
     for node in old_nodes:
+        if not node.text_type == TextType.NORMAL:
+            nodes.append(node)
+            continue
         images = extract_markdown_images(node.text)
-        text = node.text
         if not images:
             nodes.append(node)
             continue
+        text = node.text
         for image in images:
             image_pattern = f"![{image[0]}]({image[1]})"
             text_node = TextNode(text.split(image_pattern)[0], TextType.NORMAL)
@@ -43,11 +46,14 @@ def split_nodes_image(old_nodes):
 def split_nodes_link(old_nodes):
     nodes = []
     for node in old_nodes:
+        if not node.text_type == TextType.NORMAL:
+            nodes.append(node)
+            continue
         links = extract_markdown_links(node.text)
-        text = node.text
         if not links:
             nodes.append(node)
             continue
+        text = node.text
         for link in links:
             link_pattern = f"[{link[0]}]({link[1]})"
             text_node = TextNode(text.split(link_pattern)[0], TextType.NORMAL)
