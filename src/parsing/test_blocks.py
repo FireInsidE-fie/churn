@@ -3,7 +3,7 @@ import unittest
 from blocks import markdown_to_blocks
 
 class TestBlocks(unittest.TestCase):
-    def test_markdown_to_blocks(self):
+    def test_markdown_to_blocks1(self):
         md = """
 This is **bolded** paragraph
 
@@ -22,7 +22,8 @@ This is the same paragraph on a new line
                 "- This is a list\n- with items",
             ],
         )
-    def test_markdown_to_blocks(self):
+
+    def test_markdown_to_blocks2(self):
         md = """
 The **missile**
 knows where it is
@@ -46,4 +47,52 @@ because
                 "because\n- it\n- knows",
                 "- where\n- it\n- isn't"
             ],
+        )
+
+    def test_markdown_to_blocks3(self):
+        md = """
+I'm thinking
+
+Miiiikuuuu
+
+
+
+Miiikuuu
+
+ou
+
+
+i
+
+
+ou
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(
+            blocks,
+            [
+                "I'm thinking",
+                "Miiiikuuuu",
+                "Miiikuuu",
+                "ou",
+                "i",
+                "ou",
+            ],
+        )
+
+    def test_markdown_to_blocks4(self):
+        md = """
+        
+        
+        
+        
+        
+        
+        
+        
+"""
+        blocks = markdown_to_blocks(md)
+        self.assertEqual(
+            blocks,
+            []
         )
