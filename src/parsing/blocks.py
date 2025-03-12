@@ -1,10 +1,11 @@
 def markdown_to_blocks(markdown):
     blocks = markdown.split("\n\n")
+    filtered_blocks = []
 
     for block in blocks:
-        index = blocks.index(block)
-        blocks[index] = block.strip(' ').strip('\n')
-        if not blocks[index]:
-            del blocks[index]
-    print(blocks)
-    return blocks
+        stripped_block = block.strip()
+        if not stripped_block:
+            continue
+        filtered_blocks.append(stripped_block)
+    # print(filtered_blocks)
+    return filtered_blocks
