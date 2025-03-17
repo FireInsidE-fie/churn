@@ -1,3 +1,5 @@
+import re
+
 from enum import Enum
 
 class BlockType(Enum):
@@ -9,13 +11,22 @@ class BlockType(Enum):
     ORDERED_LIST = "ordered_list",
 
 def is_heading(block_str):
-    pass
+    if re.fullmatch("^#+.*$", block_str, re.MULTILINE):
+        return True
+    return False
 
 def is_code(block_str):
-    pass
+    if block_str[:3] == "```" and block_str[-3:] == "```":
+        return True
+    return False
 
 def is_quote(block_str):
-    pass
+    if block_str[0] != '>':
+        return False
+    for c in block_str:
+        if c == '\n' and c + 1 != '>':
+            return False
+    return True
 
 def is_unordered_list(block_str):
     pass
