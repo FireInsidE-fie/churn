@@ -28,13 +28,13 @@ def is_quote(block_str):
 
 def is_unordered_list(block_str):
     for line in block_str.split('\n'):
-        if not line[0] == '-' or not line[1] == ' ':
+        if not line or not line[0] == '-' or not line[1] == ' ':
             return False
     return True
 
 def is_ordered_list(block_str):
     for line in block_str.split('\n'):
-        if not line[0].isdigit() or not line[1] == '.' or not line[2] == ' ': # replace with regex
+        if not line or not re.fullmatch("\d+. .*", line):
             return False
     return True
 

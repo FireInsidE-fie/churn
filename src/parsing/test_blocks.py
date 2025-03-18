@@ -145,10 +145,10 @@ class TestBlockType(unittest.TestCase):
     def test_blocks_to_block_type_unordered_list(self):
         test_str1 = "- miku"
         test_str2 = "- ## miku"
-        test_str3 = ("- ----miku"
-                     "- wow"
-                     "- wow2-"
-                     "- still works")
+        test_str3 = ("""- ----miku
+- wow
+- wow2-
+- still works""")
         test_str4 = "-miku"
 
         self.assertEqual(block_to_block_type(test_str1), BlockType.UNORDERED_LIST)
@@ -159,13 +159,31 @@ class TestBlockType(unittest.TestCase):
     def test_blocks_to_block_type_ordered_list(self):
         test_str1 = "1. miku"
         test_str2 = "44. "
-        test_str3 = ("1. ----miku"
-                     "2. wow"
-                     "4. wow2-"
-                     "5. still works")
+        test_str3 = ("""1. ----miku
+2. wow
+4. wow2-
+5. still wow""")
         test_str4 = "6.miku"
 
         self.assertEqual(block_to_block_type(test_str1), BlockType.ORDERED_LIST)
         self.assertEqual(block_to_block_type(test_str2), BlockType.ORDERED_LIST)
         self.assertEqual(block_to_block_type(test_str3), BlockType.ORDERED_LIST)
         self.assertEqual(block_to_block_type(test_str4), BlockType.PARAGRAPH)
+
+    def test_blocks_to_block_type_mixed(self):
+        test_str1 = "# definitely ```a header```"
+        test_str2 = "```# NOT a header```"
+        test_str3 = ("""2. wow
+1. this better work
+- huh? this isn't right
+- probably a paragraph then""")
+        test_str4 = ("""> ```quote```
+> # still a quote
+> well, you know what I mean""")
+        test_str5 = ("wowowowow # hehehehehehe")
+
+        self.assertEqual(block_to_block_type(test_str1), BlockType.HEADING)
+        self.assertEqual(block_to_block_type(test_str2), BlockType.CODE)
+        self.assertEqual(block_to_block_type(test_str3), BlockType.PARAGRAPH)
+        self.assertEqual(block_to_block_type(test_str4), BlockType.QUOTE)
+        self.assertEqual(block_to_block_type(test_str5), BlockType.PARAGRAPH)
