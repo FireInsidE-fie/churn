@@ -125,3 +125,47 @@ class TestBlockType(unittest.TestCase):
         self.assertEqual(block_to_block_type(test_str4), BlockType.PARAGRAPH)
         self.assertEqual(block_to_block_type(test_str5), BlockType.PARAGRAPH)
         self.assertEqual(block_to_block_type(test_str6), BlockType.CODE)
+
+    def test_blocks_to_block_type_quote(self):
+        test_str1 = "> miku"
+        test_str2 = ">"
+        test_str3 = ("> wowowowowo"
+                     "> zazzzz"
+                     ">thisshould work too>jadklfj"
+                     "> and also this!!")
+        test_str4 = ("this should nOT work"
+                     "> wowowowow"
+                     "> oowoow")
+
+        self.assertEqual(block_to_block_type(test_str1), BlockType.QUOTE)
+        self.assertEqual(block_to_block_type(test_str2), BlockType.QUOTE)
+        self.assertEqual(block_to_block_type(test_str3), BlockType.QUOTE)
+        self.assertEqual(block_to_block_type(test_str4), BlockType.PARAGRAPH)
+
+    def test_blocks_to_block_type_unordered_list(self):
+        test_str1 = "- miku"
+        test_str2 = "- ## miku"
+        test_str3 = ("- ----miku"
+                     "- wow"
+                     "- wow2-"
+                     "- still works")
+        test_str4 = "-miku"
+
+        self.assertEqual(block_to_block_type(test_str1), BlockType.UNORDERED_LIST)
+        self.assertEqual(block_to_block_type(test_str2), BlockType.UNORDERED_LIST)
+        self.assertEqual(block_to_block_type(test_str3), BlockType.UNORDERED_LIST)
+        self.assertEqual(block_to_block_type(test_str4), BlockType.PARAGRAPH)
+
+    def test_blocks_to_block_type_ordered_list(self):
+        test_str1 = "1. miku"
+        test_str2 = "44. "
+        test_str3 = ("1. ----miku"
+                     "2. wow"
+                     "4. wow2-"
+                     "5. still works")
+        test_str4 = "6.miku"
+
+        self.assertEqual(block_to_block_type(test_str1), BlockType.ORDERED_LIST)
+        self.assertEqual(block_to_block_type(test_str2), BlockType.ORDERED_LIST)
+        self.assertEqual(block_to_block_type(test_str3), BlockType.ORDERED_LIST)
+        self.assertEqual(block_to_block_type(test_str4), BlockType.PARAGRAPH)
