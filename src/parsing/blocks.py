@@ -11,7 +11,7 @@ class BlockType(Enum):
     ORDERED_LIST = "ordered_list",
 
 def is_heading(block_str):
-    if re.fullmatch("^#+.*$", block_str, re.MULTILINE):
+    if re.fullmatch("^#{1,6} .*$", block_str, re.MULTILINE):
         return True
     return False
 

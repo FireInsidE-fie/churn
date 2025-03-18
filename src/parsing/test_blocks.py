@@ -1,6 +1,6 @@
 import unittest
 
-from blocks import markdown_to_blocks
+from blocks import markdown_to_blocks, block_to_block_type, BlockType
 
 class TestBlocks(unittest.TestCase):
     def test_markdown_to_blocks1(self):
@@ -96,3 +96,15 @@ ou
             blocks,
             []
         )
+
+class TestBlockType(unittest.TestCase):
+    def test_blocks_to_block_type_heading(self):
+        test_str1 = "# miku"
+        test_str2 = "### miku"
+        test_str3 = "##### miku"
+        test_str4 = "########## miku"
+
+        self.assertEqual(block_to_block_type(test_str1), BlockType.HEADING)
+        self.assertEqual(block_to_block_type(test_str2), BlockType.HEADING)
+        self.assertEqual(block_to_block_type(test_str3), BlockType.HEADING)
+        self.assertEqual(block_to_block_type(test_str4), BlockType.PARAGRAPH)
