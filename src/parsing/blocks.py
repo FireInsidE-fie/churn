@@ -21,18 +21,22 @@ def is_code(block_str):
     return False
 
 def is_quote(block_str):
-    if block_str[0] != '>':
-        return False
-    for c in block_str:
-        if c == '\n' and c + 1 != '>':
+    for line in block_str.split('\n'):
+        if line[0] != '>':
             return False
     return True
 
 def is_unordered_list(block_str):
-    pass
+    for line in block_str.split('\n'):
+        if not line[0].isdigit() or not line[1] == '.' or not line[2] == ' ':
+            return False
+    return True
 
 def is_ordered_list(block_str):
-    pass
+    for line in block_str.split('\n'):
+        if not line[0] == '-' or not line[1] == ' ':
+            return False
+    return True
 
 def block_to_block_type(block_str):
     if is_heading(block_str):
