@@ -108,3 +108,20 @@ class TestBlockType(unittest.TestCase):
         self.assertEqual(block_to_block_type(test_str2), BlockType.HEADING)
         self.assertEqual(block_to_block_type(test_str3), BlockType.HEADING)
         self.assertEqual(block_to_block_type(test_str4), BlockType.PARAGRAPH)
+
+    def test_blocks_to_block_type_code(self):
+        test_str1 = "```miku```"
+        test_str2 = ("```"
+                     "jfdlakfjsd wowowowowowowowo this is great oh and miku"
+                     "```")
+        test_str3 = "``````"
+        test_str4 = "``miku```"
+        test_str5 = "```miku``"
+        test_str6 = "``````miku```"
+
+        self.assertEqual(block_to_block_type(test_str1), BlockType.CODE)
+        self.assertEqual(block_to_block_type(test_str2), BlockType.CODE)
+        self.assertEqual(block_to_block_type(test_str3), BlockType.CODE)
+        self.assertEqual(block_to_block_type(test_str4), BlockType.PARAGRAPH)
+        self.assertEqual(block_to_block_type(test_str5), BlockType.PARAGRAPH)
+        self.assertEqual(block_to_block_type(test_str6), BlockType.CODE)
