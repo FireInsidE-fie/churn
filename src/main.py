@@ -1,7 +1,5 @@
-from src.textnode import *
-from src.leafnode import *
-from src.htmlnode import *
-from src.parentnode import *
+from src.nodes.textnode import *
+
 
 def main():
     test = TextNode("Hewwo", TextType.NORMAL, "boot.dev")

@@ -1,4 +1,4 @@
-from src.textnode import TextNode, TextType
+from src.nodes.textnode import TextNode, TextType
 
 from extract import extract_markdown_images, extract_markdown_links
 
