@@ -5,13 +5,17 @@ def block_to_paragraph(str):
     return HTMLNode("p", None)
 
 def block_to_heading(str):
-    pass
+    header_level = 0
+    for c in str:
+        if c == '#':
+            header_level += 1
+    return HTMLNode(f"h{header_level}", str)
 
 def block_to_code(str):
-    pass
+    return HTMLNode("code", str.strip('`'))
 
 def block_to_quote(str):
-    pass
+    return HTMLNode("q", str[2:])
 
 def block_to_unordered(str):
     pass
