@@ -15,13 +15,25 @@ def block_to_code(str):
     return HTMLNode("code", str.strip('`'))
 
 def block_to_quote(str):
-    return HTMLNode("q", str[2:])
+    lines = str.split('\n')
+    new_str = ""
+    for line in lines:
+        new_str = str + line[2:]
+    return HTMLNode("q", new_str)
 
 def block_to_unordered(str):
-    pass
+    lines = str.split('\n')
+    new_str = ""
+    for line in lines:
+        new_str = str + line[2:]
+    return HTMLNode("ul", new_str) # Need child nodes for each list element
 
 def block_to_ordered(str):
-    pass
+    lines = str.split('\n')
+    new_str = ""
+    for line in lines:
+        new_str = str + line[2:]
+    return HTMLNode("ol", new_str) # Need child nodes for each list element
 
 def markdown_to_html_node(md_str):
     blocks = markdown_to_blocks(md_str)
