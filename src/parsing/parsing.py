@@ -1,4 +1,4 @@
-from split import *
+from src.parsing.split import *
 
 def text_to_textnodes(text):
     starting_node = TextNode(text, TextType.NORMAL)
