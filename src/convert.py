@@ -1,41 +1,42 @@
 from nodes.htmlnode import HTMLNode
+from nodes.textnode import text_node_to_html_node
 from parsing.blocks import markdown_to_blocks, block_to_block_type, BlockType
 from src.parsing.parsing import text_to_textnodes
 
 
 def block_to_paragraph(str):
-    return HTMLNode("p", None, text_to_textnodes(str))
+    return HTMLNode("p", None, list(map(text_node_to_html_node, text_to_textnodes(str))))
 
 def block_to_heading(str):
     header_level = 0
     for c in str:
         if c == '#':
             header_level += 1
-    return HTMLNode(f"h{header_level}", str, text_to_textnodes(str))
+    return HTMLNode(f"h{header_level}", str, list(map(text_node_to_html_node, text_to_textnodes(str))))
 
 def block_to_code(str):
-    return HTMLNode("code", str.strip('`'), text_to_textnodes(str))
+    return HTMLNode("code", str.strip('`'), list(map(text_node_to_html_node, text_to_textnodes(str))))
 
 def block_to_quote(str):
     lines = str.split('\n')
     new_str = ""
     for line in lines:
         new_str = new_str + line[2:]
-    return HTMLNode("q", new_str, text_to_textnodes(str))
+    return HTMLNode("q", new_str, list(map(text_node_to_html_node, text_to_textnodes(str))))
 
 def block_to_unordered(str):
     lines = str.split('\n')
     new_str = ""
     for line in lines:
         new_str = new_str + line[2:]
-    return HTMLNode("ul", new_str, text_to_textnodes(str)) # Need child nodes for each list element
+    return HTMLNode("ul", new_str, list(map(text_node_to_html_node, text_to_textnodes(str)))) # Need child nodes for each list element
 
 def block_to_ordered(str):
     lines = str.split('\n')
     new_str = ""
     for line in lines:
         new_str = new_str + line[2:]
-    return HTMLNode("ol", new_str, text_to_textnodes(str)) # Need child nodes for each list element
+    return HTMLNode("ol", new_str, list(map(text_node_to_html_node, text_to_textnodes(str)))) # Need child nodes for each list element
 
 def markdown_to_html_node(md_str):
     blocks = markdown_to_blocks(md_str)
@@ -57,4 +58,5 @@ def markdown_to_html_node(md_str):
                 child_nodes.append(block_to_ordered(block))
 
     parent_node = HTMLNode("div", None, child_nodes)
+    print(parent_node)
     return parent_node
