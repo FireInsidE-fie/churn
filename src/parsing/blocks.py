@@ -60,5 +60,4 @@ def markdown_to_blocks(markdown):
         if not stripped_block:
             continue
         filtered_blocks.append(stripped_block)
-    # print(filtered_blocks)
     return filtered_blocks
