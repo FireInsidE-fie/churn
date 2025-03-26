@@ -15,7 +15,7 @@ def block_to_heading(str):
     return HTMLNode(f"h{header_level}", str, list(map(text_node_to_html_node, text_to_textnodes(str))))
 
 def block_to_code(str):
-    return HTMLNode("code", str.strip('`'), list(map(text_node_to_html_node, text_to_textnodes(str))))
+    return HTMLNode("code", str.strip('`'))
 
 def block_to_quote(str):
     lines = str.split('\n')
@@ -43,6 +43,7 @@ def markdown_to_html_node(md_str):
     child_nodes = []
     for block in blocks:
         block_type = block_to_block_type(block)
+        print(f"\nblock_type: {block_type}\n")
         match block_type:
             case BlockType.PARAGRAPH:
                 child_nodes.append(block_to_paragraph(block))
