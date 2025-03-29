@@ -12,7 +12,11 @@ class HTMLNode:
         if self.children:
             children_html = "".join(list(map(lambda elem: elem.to_html(), self.children)))
         if self.props:
+            if self.value:
+                return f"<{self.tag}{self.props_to_html()}>{self.value}{children_html}</{self.tag}>"
             return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>"
+        if self.value:
+            return f"<{self.tag}>{self.value}{children_html}</{self.tag}>"
         return f"<{self.tag}>{children_html}</{self.tag}>"
 
     def props_to_html(self):
