@@ -15,7 +15,7 @@ def block_to_heading(str):
     return HTMLNode(f"h{header_level}", str, list(map(text_node_to_html_node, text_to_textnodes(str))))
 
 def block_to_code(str):
-    return HTMLNode("code", str.strip('`'))
+    return HTMLNode("code", str.strip('`').strip('\n'))
 
 def block_to_quote(str):
     lines = str.split('\n')
